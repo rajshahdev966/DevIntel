@@ -1,68 +1,161 @@
+@import "tailwindcss";
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Dark Theme (Default - as seen in screenshot) */
+  --bg-main: #070a12;
+  --bg-sidebar: #0a0e1a;
+  --bg-card: #0f1626;
+  --bg-card-subtle: #141d30;
+  --bg-card-inner: #0b111f;
+  --bg-input: #0b111f;
+  --bg-hover: #19243b;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --border-main: #1b253b;
+  --border-subtle: #141c2c;
+  --border-light: #25334d;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --text-main: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --accent-blue: #3b82f6;
+  --accent-blue-hover: #2563eb;
+  --accent-blue-light: #60a5fa;
+  --accent-blue-subtle: rgba(59, 130, 246, 0.12);
+
+  /* Language Pill Badges */
+  --lang-ts-bg: #11203d;
+  --lang-ts-text: #60a5fa;
+  --lang-ts-border: #1d3b6f;
+
+  --lang-rust-bg: #35190d;
+  --lang-rust-text: #fb923c;
+  --lang-rust-border: #6c2e14;
+
+  --lang-go-bg: #0b2938;
+  --lang-go-text: #38bdf8;
+  --lang-go-border: #134e6d;
+
+  --lang-py-bg: #322507;
+  --lang-py-text: #facc15;
+  --lang-py-border: #5e440e;
+
+  /* Status Badges */
+  --status-healthy-bg: #062b19;
+  --status-healthy-text: #4ade80;
+  --status-healthy-border: #14532d;
+
+  --status-warning-bg: #361f05;
+  --status-warning-text: #fbbf24;
+  --status-warning-border: #78350f;
+
+  --status-stale-bg: #331313;
+  --status-stale-text: #f87171;
+  --status-stale-border: #7f1d1d;
+
+  /* Chart & Metrics */
+  --chart-bar-bg: #1e293b;
+  --chart-bar-fill: #93c5fd;
+  --chart-bar-pr: #475569;
+  --score-track: #1e293b;
+  --score-fill: #3b82f6;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Light Theme Version */
+:root:has(#theme-toggle:checked),
+.light,
+[data-theme="light"] {
+  --bg-main: #f8fafc;
+  --bg-sidebar: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f1f5f9;
+  --bg-card-inner: #f8fafc;
+  --bg-input: #ffffff;
+  --bg-hover: #f1f5f9;
+
+  --border-main: #e2e8f0;
+  --border-subtle: #edf2f7;
+  --border-light: #cbd5e1;
+
+  --text-main: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --accent-blue: #2563eb;
+  --accent-blue-hover: #1d4ed8;
+  --accent-blue-light: #3b82f6;
+  --accent-blue-subtle: rgba(37, 99, 235, 0.08);
+
+  /* Language Pill Badges */
+  --lang-ts-bg: #eff6ff;
+  --lang-ts-text: #1d4ed8;
+  --lang-ts-border: #bfdbfe;
+
+  --lang-rust-bg: #fff7ed;
+  --lang-rust-text: #c2410c;
+  --lang-rust-border: #fed7aa;
+
+  --lang-go-bg: #ecfeff;
+  --lang-go-text: #0284c7;
+  --lang-go-border: #a5f3fc;
+
+  --lang-py-bg: #fefce8;
+  --lang-py-text: #a16207;
+  --lang-py-border: #fef08a;
+
+  /* Status Badges */
+  --status-healthy-bg: #f0fdf4;
+  --status-healthy-text: #15803d;
+  --status-healthy-border: #bbf7d0;
+
+  --status-warning-bg: #fffbeb;
+  --status-warning-text: #b45309;
+  --status-warning-border: #fde68a;
+
+  --status-stale-bg: #fef2f2;
+  --status-stale-text: #b91c1c;
+  --status-stale-border: #fecaca;
+
+  /* Chart & Metrics */
+  --chart-bar-bg: #e2e8f0;
+  --chart-bar-fill: #3b82f6;
+  --chart-bar-pr: #94a3b8;
+  --score-track: #e2e8f0;
+  --score-fill: #2563eb;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+@theme {
+  --color-surface-main: var(--bg-main);
+  --color-surface-sidebar: var(--bg-sidebar);
+  --color-surface-card: var(--bg-card);
+  --color-surface-card-subtle: var(--bg-card-subtle);
+  --color-surface-card-inner: var(--bg-card-inner);
+  --color-surface-input: var(--bg-input);
+  --color-surface-hover: var(--bg-hover);
+
+  --color-border-main: var(--border-main);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-light: var(--border-light);
+
+  --color-content-main: var(--text-main);
+  --color-content-secondary: var(--text-secondary);
+  --color-content-muted: var(--text-muted);
+
+  --color-brand-blue: var(--accent-blue);
+  --color-brand-blue-hover: var(--accent-blue-hover);
+  --color-brand-blue-light: var(--accent-blue-light);
+  --color-brand-blue-subtle: var(--accent-blue-subtle);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 9999px;
 }
