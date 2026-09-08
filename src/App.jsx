@@ -1,13 +1,13 @@
 import React from 'react'
-import Sidebar from './components/Sidebar'
-import Navbar from './components/Navbar'
+import Sidebar from './shared/ui/components/Sidebar'
+import Navbar from './features/dashboard/ui/components/Navbar'
 import ProfileBanner from './components/ProfileBanner'
-import MetricsOverview from './components/MetricsOverview'
-import HealthScoreCard from './components/HealthScoreCard'
-import IntelligenceOverview from './components/IntelligenceOverview'
-import RepositoryHighlights from './components/RepositoryHighlights'
-import TelemetryObservations from './components/TelemetryObservations'
-import RepositoriesTable from './components/RepositoriesTable'
+import MetricsOverview from './features/analytics/ui/components/MetricsOverview'
+import HealthScoreCard from './features/analytics/ui/components/HealthScoreCard'
+import IntelligenceOverview from './features/analytics/ui/components/IntelligenceOverview'
+import RepositoryHighlights from './features/repositoryCollection/ui/components/RepositoryHighlights'
+import TelemetryObservations from './features/repositoryCollection/ui/components/TelemetryObservations'
+import RepositoriesTable from './features/repositoryCollection/ui/components/RepositoriesTable'
 
 export const App = () => {
   return (

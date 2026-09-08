@@ -2,7 +2,12 @@ import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import AuthProtected from './protected/AuthProtected'
 import PublicProtected from './protected/PublicProtected'
-import Analytics from '../../features/analytics/ui/pages/Analytics'
+import DashboardPage from '../../features/dashboard/ui/pages/DashboardPage'
+import RepoCollection from '../../features/repositoryCollection/ui/pages/RepoCollection'
+import AnalyticsPage from '../../features/analytics/ui/pages/AnalyticsPage'
+import SettingsPage from '../../features/settings/ui/pages/SettingsPage'
+import RepoAdd from '../../features/repoAdd/ui/pages/RepoAdd'
+import MainLayout from '../layout/MainLayout'
 
 const router = createBrowserRouter([{
     path: "",
@@ -10,7 +15,7 @@ const router = createBrowserRouter([{
     children: [
         {
             path: "",
-            element:
+            element: <RepoAdd/>
         }
     ]
 }, {
@@ -23,19 +28,19 @@ const router = createBrowserRouter([{
             children: [
                 {
                     path: "dashboard",
-                    element: <Dashboard/>
+                    element: <DashboardPage />
                 },
                 {
-                    path: "repositories",
-                    element: <Repositories/>
+                    path: "repos",
+                    element: <RepoCollection/>
                 },
                 {
                     path: "analytics",
-                    element: <Analytics/>
+                    element: <AnalyticsPage/>
                 },
                 {
                     path: "settings",
-                    element: <Settings/>
+                    element: <SettingsPage/>
                 }
             ]
         }
