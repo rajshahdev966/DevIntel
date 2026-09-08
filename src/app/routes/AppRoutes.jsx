@@ -6,7 +6,7 @@ import DashboardPage from '../../features/dashboard/ui/pages/DashboardPage'
 import RepoCollection from '../../features/repositoryCollection/ui/pages/RepoCollection'
 import AnalyticsPage from '../../features/analytics/ui/pages/AnalyticsPage'
 import SettingsPage from '../../features/settings/ui/pages/SettingsPage'
-import RepoAdd from '../../features/repoAdd/ui/pages/RepoAdd'
+import RepoAdd from '../../features/repoAdd/ui/pages/ProfileAuthPage'
 import MainLayout from '../layout/MainLayout'
 
 const router = createBrowserRouter([{
