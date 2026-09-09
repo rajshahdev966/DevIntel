@@ -2,7 +2,7 @@ import React from 'react'
 
 export const LanguageIntelligenceCard = () => {
   return (
-    <div>
+    <div >
       {/* Header */}
       <div className="flex items-center justify-between gap-2 mb-4">
         <h2 className="text-base font-semibold text-content-main">

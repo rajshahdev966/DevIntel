@@ -1,73 +1,37 @@
-import React from 'react'
-import { Search, ChevronDown, FileCode } from 'lucide-react'
+import React, { useEffect, useState } from "react";
+import { Search, ChevronDown, FileCode } from "lucide-react";
+import { getGithubRepos } from "../../api/repoApi";
+import { useSelector } from "react-redux";
+import { useRepoTable } from "../../hooks/useRepoTable";
+import RepoDetailModal from "./RepoDetailModal";
 
 export const RepositoriesTable = () => {
-  // Pure presentational data list - no React state or JS business logic
-  const repos = [
-    {
-      name: 'core-engine',
-      language: 'TypeScript',
-      langClass:
-        'bg-[var(--lang-ts-bg)] text-[var(--lang-ts-text)] border-[var(--lang-ts-border)]',
-      stars: '8,210',
-      forks: '1,140',
-      updated: '2 hours ago',
-      status: 'Healthy',
-      statusClass:
-        'bg-[var(--status-healthy-bg)] text-[var(--status-healthy-text)] border-[var(--status-healthy-border)]',
-    },
-    {
-      name: 'sync-protocol',
-      language: 'Rust',
-      langClass:
-        'bg-[var(--lang-rust-bg)] text-[var(--lang-rust-text)] border-[var(--lang-rust-border)]',
-      stars: '4,520',
-      forks: '620',
-      updated: '14 mins ago',
-      status: 'Healthy',
-      statusClass:
-        'bg-[var(--status-healthy-bg)] text-[var(--status-healthy-text)] border-[var(--status-healthy-border)]',
-    },
-    {
-      name: 'distributed-cache',
-      language: 'Go',
-      langClass:
-        'bg-[var(--lang-go-bg)] text-[var(--lang-go-text)] border-[var(--lang-go-border)]',
-      stars: '1,890',
-      forks: '310',
-      updated: '3 days ago',
-      status: 'Warning',
-      statusClass:
-        'bg-[var(--status-warning-bg)] text-[var(--status-warning-text)] border-[var(--status-warning-border)]',
-    },
-    {
-      name: 'edge-router',
-      language: 'TypeScript',
-      langClass:
-        'bg-[var(--lang-ts-bg)] text-[var(--lang-ts-text)] border-[var(--lang-ts-border)]',
-      stars: '940',
-      forks: '180',
-      updated: '5 hours ago',
-      status: 'Healthy',
-      statusClass:
-        'bg-[var(--status-healthy-bg)] text-[var(--status-healthy-text)] border-[var(--status-healthy-border)]',
-    },
-    {
-      name: 'legacy-parser',
-      language: 'Python',
-      langClass:
-        'bg-[var(--lang-py-bg)] text-[var(--lang-py-text)] border-[var(--lang-py-border)]',
-      stars: '210',
-      forks: '45',
-      updated: '6 months ago',
-      status: 'Stale',
-      statusClass:
-        'bg-[var(--status-stale-bg)] text-[var(--status-stale-text)] border-[var(--status-stale-border)]',
-    },
-  ]
+  const { repos, formatDate, copyGithubLink, navigate } = useRepoTable();
+
+  const [selectedRepo, setselectedRepo] = useState(null);
+  console.log("dv fbhjsbdhjf", selectedRepo);
+  
 
   return (
     <section className="space-y-4">
+      {/* Dialog with glassmorphism backdrop */}
+      {selectedRepo && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md transition-all animate-in fade-in duration-200"
+          onClick={() => setselectedRepo(null)}
+        >
+          <div 
+            className="w-full max-w-5xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <RepoDetailModal 
+              isOpen={Boolean(selectedRepo)} 
+              onClose={() => setselectedRepo(null)} 
+              selectedRepo={selectedRepo}
+            />
+          </div>
+        </div>
+      )}
       {/* Filter and Search Bar Controls */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
         {/* Search Input */}
@@ -118,22 +82,34 @@ export const RepositoriesTable = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-border-main text-[11px] font-semibold text-content-muted uppercase tracking-wider bg-surface-card-subtle/50">
-                <th scope="col" className="py-3 px-5">Repository</th>
-                <th scope="col" className="py-3 px-5">Language</th>
-                <th scope="col" className="py-3 px-5">Stars</th>
-                <th scope="col" className="py-3 px-5">Forks</th>
-                <th scope="col" className="py-3 px-5">Last Updated</th>
-                <th scope="col" className="py-3 px-5">Health Status</th>
+                <th scope="col" className="py-3 px-5">
+                  Repository
+                </th>
+                <th scope="col" className="py-3 px-5 text-center">
+                  Language
+                </th>
+                <th scope="col" className="py-3 px-5 text-center">
+                  Stars
+                </th>
+                <th scope="col" className="py-3 px-5 text-center">
+                  Forks
+                </th>
+                <th scope="col" className="py-3 px-5 text-center">
+                  Last Updated
+                </th>
+                <th scope="col" className="py-3 px-5 text-center">
+                  Clone Links
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-main text-xs">
-              {repos.map((row, idx) => (
+              {repos?.map((row, idx) => (
                 <tr
                   key={idx}
-                  className="hover:bg-surface-hover/60 transition-colors cursor-pointer group"
+                  className="hover:bg-surface-hover/60 transition-colors group"
                 >
                   {/* Repository Name */}
-                  <td className="py-3.5 px-5">
+                  <td className="py-3.5 px-5 cursor-pointer" onClick={()=> setselectedRepo(row.name)}>
                     <div className="flex items-center gap-2.5">
                       <FileCode className="w-4 h-4 text-content-muted group-hover:text-brand-blue transition-colors" />
                       <span className="font-semibold text-content-main group-hover:text-brand-blue transition-colors">
@@ -143,36 +119,37 @@ export const RepositoriesTable = () => {
                   </td>
 
                   {/* Language */}
-                  <td className="py-3.5 px-5">
+                  <td className="py-3.5 px-5 ">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${row.langClass}`}
+                      className={`inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border w-full `}
                     >
-                      {row.language}
+                      {row.language ?? "-"}
                     </span>
                   </td>
 
                   {/* Stars */}
-                  <td className="py-3.5 px-5 font-medium text-content-secondary">
-                    {row.stars}
+                  <td className="py-3.5 px-5 font-medium text-content-secondary text-center">
+                    {row.stargazers_count}
                   </td>
 
                   {/* Forks */}
-                  <td className="py-3.5 px-5 font-medium text-content-secondary">
-                    {row.forks}
+                  <td className="py-3.5 px-5 font-medium text-content-secondary text-center">
+                    {row.forks_count}
                   </td>
 
                   {/* Last Updated */}
-                  <td className="py-3.5 px-5 text-content-muted">
-                    {row.updated}
+                  <td className="py-3.5 px-5 text-content-muted text-center">
+                    {formatDate(row.updated_at)}
                   </td>
 
                   {/* Health Status */}
-                  <td className="py-3.5 px-5">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${row.statusClass}`}
+                  <td className="py-3.5 px-5 text-center">
+                    <button
+                      className={`cursor-pointer inline-flex items-center px-1.5 py-0.5 rounded-full text-[8px] font-semibold border justify-center`}
+                      onClick={() => copyGithubLink(row.clone_url)}
                     >
-                      {row.status}
-                    </span>
+                      Copy
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -181,48 +158,10 @@ export const RepositoriesTable = () => {
         </div>
 
         {/* Table Pagination Footer */}
-        <div className="py-3.5 px-5 border-t border-border-main flex flex-wrap items-center justify-between gap-4 text-xs">
-          <span className="text-content-muted">
-            Showing <strong className="text-content-main font-semibold">1-5</strong> of{' '}
-            <strong className="text-content-main font-semibold">42</strong> repositories
-          </span>
-
-          <div className="flex items-center gap-1.5">
-            <button
-              type="button"
-              className="px-3 py-1.5 rounded-lg border border-border-main text-content-muted hover:text-content-main hover:bg-surface-hover transition-colors"
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              className="w-7 h-7 flex items-center justify-center rounded-lg bg-brand-blue text-white font-semibold shadow-sm"
-            >
-              1
-            </button>
-            <button
-              type="button"
-              className="w-7 h-7 flex items-center justify-center rounded-lg border border-border-main text-content-secondary hover:text-content-main hover:bg-surface-hover transition-colors font-medium"
-            >
-              2
-            </button>
-            <button
-              type="button"
-              className="w-7 h-7 flex items-center justify-center rounded-lg border border-border-main text-content-secondary hover:text-content-main hover:bg-surface-hover transition-colors font-medium"
-            >
-              3
-            </button>
-            <button
-              type="button"
-              className="px-3 py-1.5 rounded-lg border border-border-main text-content-secondary hover:text-content-main hover:bg-surface-hover transition-colors"
-            >
-              Next
-            </button>
-          </div>
+       
         </div>
-      </div>
     </section>
-  )
-}
+  );
+};
 
-export default RepositoriesTable
+export default RepositoriesTable;

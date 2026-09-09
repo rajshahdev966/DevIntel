@@ -23,6 +23,23 @@
   --accent-blue-light: #60a5fa;
   --accent-blue-subtle: rgba(59, 130, 246, 0.12);
 
+  /* Button: Solid Error / Destructive */
+  --btn-error-bg: #dc2626;
+  --btn-error-hover: #b91c1c;
+  --btn-error-text: #ffffff;
+  --btn-error-border: #ef4444;
+
+  /* Button: Subtle / Outline Error */
+  --btn-error-subtle-bg: rgba(239, 68, 68, 0.12);
+  --btn-error-subtle-hover: rgba(239, 68, 68, 0.22);
+  --btn-error-subtle-text: #f87171;
+  --btn-error-subtle-border: rgba(239, 68, 68, 0.35);
+
+  /* Button: Disabled State */
+  --btn-disabled-bg: #162032;
+  --btn-disabled-text: #64748b;
+  --btn-disabled-border: #23314a;
+
   /* Language Pill Badges */
   --lang-ts-bg: #11203d;
   --lang-ts-text: #60a5fa;
@@ -86,6 +103,23 @@
   --accent-blue-light: #3b82f6;
   --accent-blue-subtle: rgba(37, 99, 235, 0.08);
 
+  /* Button: Solid Error / Destructive */
+  --btn-error-bg: #dc2626;
+  --btn-error-hover: #b91c1c;
+  --btn-error-text: #ffffff;
+  --btn-error-border: #b91c1c;
+
+  /* Button: Subtle / Outline Error */
+  --btn-error-subtle-bg: #fef2f2;
+  --btn-error-subtle-hover: #fee2e2;
+  --btn-error-subtle-text: #dc2626;
+  --btn-error-subtle-border: #fecaca;
+
+  /* Button: Disabled State */
+  --btn-disabled-bg: #f1f5f9;
+  --btn-disabled-text: #94a3b8;
+  --btn-disabled-border: #e2e8f0;
+
   /* Language Pill Badges */
   --lang-ts-bg: #eff6ff;
   --lang-ts-text: #1d4ed8;
@@ -145,6 +179,21 @@
   --color-brand-blue-hover: var(--accent-blue-hover);
   --color-brand-blue-light: var(--accent-blue-light);
   --color-brand-blue-subtle: var(--accent-blue-subtle);
+
+  /* Button Tokens */
+  --color-btn-error-bg: var(--btn-error-bg);
+  --color-btn-error-hover: var(--btn-error-hover);
+  --color-btn-error-text: var(--btn-error-text);
+  --color-btn-error-border: var(--btn-error-border);
+
+  --color-btn-error-subtle-bg: var(--btn-error-subtle-bg);
+  --color-btn-error-subtle-hover: var(--btn-error-subtle-hover);
+  --color-btn-error-subtle-text: var(--btn-error-subtle-text);
+  --color-btn-error-subtle-border: var(--btn-error-subtle-border);
+
+  --color-btn-disabled-bg: var(--btn-disabled-bg);
+  --color-btn-disabled-text: var(--btn-disabled-text);
+  --color-btn-disabled-border: var(--btn-disabled-border);
 }
 
 /* Custom subtle scrollbar */

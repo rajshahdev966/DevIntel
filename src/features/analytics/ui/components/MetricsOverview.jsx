@@ -1,7 +1,29 @@
-import React from 'react'
+import React, { startTransition, useContext, useEffect, useState } from 'react'
 import { Code2, Star, GitFork, Users, Clock } from 'lucide-react'
+import { useSelector } from 'react-redux';
+import { AnalysisContext } from '../../../../app/context/AnalysisContext';
 
 export const MetricsOverview = () => {
+  const {repos} = useContext(AnalysisContext);
+  const {user} = useSelector((store)=> store.profile);
+  const [forkCountNum, setForkCountNum] = useState(0)
+  const [starCountNum, setStarCountNum] = useState(0)
+  const metrixCounter = ()=>{
+    let forkCount = 0;
+    let starCount = 0;
+    repos?.map((elem)=>{
+      forkCount += Number(elem?.forks_count);
+      starCount += Number(elem?.stargazers_count)
+    })
+    setForkCountNum(forkCount);
+    setStarCountNum(starCount);
+  }
+
+  useEffect(()=>{
+    metrixCounter();
+  }, [forkCountNum, starCountNum])
+
+
   return (
     <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {/* 1. Repositories */}
@@ -12,10 +34,7 @@ export const MetricsOverview = () => {
         </div>
         <div className="flex items-baseline justify-between gap-2">
           <span className="text-2xl font-bold tracking-tight text-content-main">
-            42
-          </span>
-          <span className="px-2 py-0.5 text-[11px] font-semibold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full whitespace-nowrap">
-            +2 this mo
+            {user?.public_repos}
           </span>
         </div>
       </div>
@@ -28,10 +47,7 @@ export const MetricsOverview = () => {
         </div>
         <div className="flex items-baseline justify-between gap-2">
           <span className="text-2xl font-bold tracking-tight text-content-main">
-            14.8k
-          </span>
-          <span className="px-2 py-0.5 text-[11px] font-semibold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full whitespace-nowrap">
-            +12%
+            {starCountNum}
           </span>
         </div>
       </div>
@@ -44,10 +60,7 @@ export const MetricsOverview = () => {
         </div>
         <div className="flex items-baseline justify-between gap-2">
           <span className="text-2xl font-bold tracking-tight text-content-main">
-            2.4k
-          </span>
-          <span className="px-2 py-0.5 text-[11px] font-semibold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full whitespace-nowrap">
-            +6%
+            {forkCountNum}
           </span>
         </div>
       </div>
@@ -60,10 +73,7 @@ export const MetricsOverview = () => {
         </div>
         <div className="flex items-baseline justify-between gap-2">
           <span className="text-2xl font-bold tracking-tight text-content-main">
-            8.9k
-          </span>
-          <span className="px-2 py-0.5 text-[11px] font-semibold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full whitespace-nowrap">
-            +340
+            {user?.followers}
           </span>
         </div>
       </div>
@@ -79,7 +89,7 @@ export const MetricsOverview = () => {
             7 Years
           </span>
           <span className="text-xs font-medium text-content-muted whitespace-nowrap">
-            Since 2017
+            Since {String(user?.created_at).slice(0,4)}
           </span>
         </div>
       </div>

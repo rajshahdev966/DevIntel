@@ -1,54 +1,75 @@
-import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router'
-import AuthProtected from './protected/AuthProtected'
-import PublicProtected from './protected/PublicProtected'
-import DashboardPage from '../../features/dashboard/ui/pages/DashboardPage'
-import RepoCollection from '../../features/repositoryCollection/ui/pages/RepoCollection'
-import AnalyticsPage from '../../features/analytics/ui/pages/AnalyticsPage'
-import SettingsPage from '../../features/settings/ui/pages/SettingsPage'
-import RepoAdd from '../../features/repoAdd/ui/pages/ProfileAuthPage'
-import MainLayout from '../layout/MainLayout'
+import React, { useEffect } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import AuthProtected from "./protected/AuthProtected";
+import PublicProtected from "./protected/PublicProtected";
+import DashboardPage from "../../features/dashboard/ui/pages/DashboardPage";
+import RepoCollection from "../../features/repositoryCollection/ui/pages/RepoCollection";
+import AnalyticsPage from "../../features/analytics/ui/pages/AnalyticsPage";
+import SettingsPage from "../../features/settings/ui/pages/SettingsPage";
+import RepoAdd from "../../features/repoAdd/ui/pages/ProfileAuthPage";
+import MainLayout from "../layout/MainLayout";
+import { useDispatch } from "react-redux";
+import { profileAddAction } from "../../features/repoAdd/state/profileActions";
+import RepoDetailModal from "../../features/repositoryCollection/ui/components/RepoDetailModal";
 
-const router = createBrowserRouter([{
+const router = createBrowserRouter([
+  {
     path: "",
-    element: <AuthProtected/>,
+    element: <AuthProtected />,
     children: [
-        {
-            path: "",
-            element: <RepoAdd/>
-        }
-    ]
-}, {
+      {
+        path: "",
+        element: <RepoAdd />,
+      },
+    ],
+  },
+  {
     path: "/main",
-    element: <PublicProtected/>,
+    element: <PublicProtected />,
     children: [
-        {
-            path: "",
-            element: <MainLayout/>,
+      {
+        path: "",
+        element: <MainLayout />,
+        children: [
+          {
+            path: "dashboard",
+            element: <DashboardPage />,
+          },
+          {
+            path: "repos",
+            element: <RepoCollection />,
             children: [
                 {
-                    path: "dashboard",
-                    element: <DashboardPage />
-                },
-                {
-                    path: "repos",
-                    element: <RepoCollection/>
-                },
-                {
-                    path: "analytics",
-                    element: <AnalyticsPage/>
-                },
-                {
-                    path: "settings",
-                    element: <SettingsPage/>
+                    path: "detail/:id",
+                    element: <RepoDetailModal/>
                 }
             ]
-        }
-    ]
-}])
+          },
+          {
+            path: "analytics",
+            element: <AnalyticsPage />,
+          },
+          {
+            path: "settings",
+            element: <SettingsPage />,
+          },
+        ],
+      },
+    ],
+  },
+]);
 
 const AppRoutes = () => {
-  return <RouterProvider router={router}/>
-}
+  const dispatch = useDispatch();
+  useEffect(() => {
+    (() => {
+        const user = JSON.parse(localStorage.getItem("githubUser"));
+        if(!user) return;        
+        dispatch(profileAddAction(user.login));
+    })();
+  }, []);
 
-export default AppRoutes
+  return <RouterProvider router={router} />;
+};
+
+export default AppRoutes;

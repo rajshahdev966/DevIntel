@@ -6,8 +6,10 @@ export const profileAddAction = createAsyncThunk(
     async (githubUser, thunkApi)=>{
         try {
             if(githubUser){
+                console.log("Hello", githubUser);
                 const res = await githubApi.get(`/users/${githubUser}`)
                 console.log("from thunk", res.data);
+                localStorage.setItem("githubUser", JSON.stringify(res.data))
                 return res.data;
             }else{
                 return null;
