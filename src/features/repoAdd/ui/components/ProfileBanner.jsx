@@ -49,28 +49,6 @@ export const ProfileBanner = () => {
             </p>
           </div>
         </div>
-
-        {/* Right: Quick Action Buttons */}
-        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto self-stretch sm:self-auto">
-          {/* Share Report */}
-          <button
-            type="button"
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-content-main bg-surface-card-subtle border border-border-main hover:bg-surface-hover hover:border-border-light transition-colors"
-          >
-            <Share2 className="w-3.5 h-3.5 text-content-secondary" />
-            <span>Share Report</span>
-          </button>
-
-          {/* Export PDF */}
-          <button
-            type="button"
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-content-main bg-surface-card-subtle border border-border-main hover:bg-surface-hover hover:border-border-light transition-colors"
-          >
-            <FileDown className="w-3.5 h-3.5 text-content-secondary" />
-            <span>Export PDF</span>
-          </button>
-
-        </div>
       </div>
     </section>
   )
