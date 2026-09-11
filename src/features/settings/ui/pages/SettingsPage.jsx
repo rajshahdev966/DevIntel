@@ -12,9 +12,8 @@ import { useNavigate } from "react-router";
 import { removeUser } from "../../../repoAdd/state/profileSlice";
 
 export const SettingsPage = () => {
-  const { user } = useSelector((store) => store.profile);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+ 
+  const {navigate, dispatch, user} = useSettings()
   return (
     <div className="flex-1 flex flex-col min-w-0">
       <main className="flex-1 p-6 md:p-8 space-y-6 max-w-5xl w-full mx-auto">

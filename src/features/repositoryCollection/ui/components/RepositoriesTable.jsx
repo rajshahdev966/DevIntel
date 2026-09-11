@@ -7,7 +7,7 @@ import RepoDetailModal from "./RepoDetailModal";
 
 export const RepositoriesTable = () => {
   
-  const { repos, formatDate, copyGithubLink, pageNum, setPageNum, setSearchTerm, searchTerm, sortValue, setSortValue } = useRepoTable();
+  const { repos, formatDate, copyGithubLink, pageNum, setPageNum, setSearchTerm, searchTerm, setSortValue } = useRepoTable();
   const [selectedRepo, setselectedRepo] = useState(null);
 
   return (
