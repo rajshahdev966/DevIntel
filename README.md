@@ -138,6 +138,6 @@ MIT — use it, fork it, tell me what's broken.
 
 🎓 Nirma University | 📍 Ahmedabad, India
 
-[![GitHub](https://img.shields.io/badge/GitHub-@yourhandle-181717?logo=github&logoColor=white)](https://github.com/rajshahdev966)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Raj-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rajshah-dev/)
+[![GitHub](https://img.shields.io/badge/GitHub-@rajshahdev966-181717?logo=github&logoColor=white)](https://github.com/rajshahdev966)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Raj_Shah-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rajshah-dev/)
 
