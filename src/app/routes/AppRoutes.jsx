@@ -67,7 +67,7 @@ const AppRoutes = () => {
         if(!user) return;        
         dispatch(profileAddAction(user.login));
     })();
-  }, []);
+  }, []); // Hydrate the user data for Redux
 
   return <RouterProvider router={router} />;
 };

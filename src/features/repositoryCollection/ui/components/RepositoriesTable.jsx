@@ -6,27 +6,25 @@ import { useRepoTable } from "../../hooks/useRepoTable";
 import RepoDetailModal from "./RepoDetailModal";
 
 export const RepositoriesTable = () => {
-  const { repos, formatDate, copyGithubLink, navigate } = useRepoTable();
-
-  const [selectedRepo, setselectedRepo] = useState(null);
-  console.log("dv fbhjsbdhjf", selectedRepo);
   
+  const { repos, formatDate, copyGithubLink, pageNum, setPageNum, setSearchTerm, searchTerm, sortValue, setSortValue } = useRepoTable();
+  const [selectedRepo, setselectedRepo] = useState(null);
 
   return (
     <section className="space-y-4">
       {/* Dialog with glassmorphism backdrop */}
       {selectedRepo && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md transition-all animate-in fade-in duration-200"
           onClick={() => setselectedRepo(null)}
         >
-          <div 
+          <div
             className="w-full max-w-5xl max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <RepoDetailModal 
-              isOpen={Boolean(selectedRepo)} 
-              onClose={() => setselectedRepo(null)} 
+            <RepoDetailModal
+              isOpen={Boolean(selectedRepo)}
+              onClose={() => setselectedRepo(null)}
               selectedRepo={selectedRepo}
             />
           </div>
@@ -38,42 +36,27 @@ export const RepositoriesTable = () => {
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-content-muted absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
+          onChange={(e)=> setSearchTerm(e.target.value)}
             type="text"
             placeholder="Filter repositories..."
             className="w-full bg-surface-card border border-border-main rounded-xl pl-10 pr-4 py-2 text-xs text-content-main placeholder:text-content-muted focus:outline-none focus:border-brand-blue transition-colors"
-            readOnly
           />
         </div>
 
         {/* Dropdown Filters */}
-        <div className="flex flex-wrap items-center gap-2.5">
-          {/* Language Filter */}
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-content-secondary bg-surface-card border border-border-main rounded-xl hover:border-border-light hover:text-content-main transition-colors"
-          >
-            <span>Language: All</span>
-            <ChevronDown className="w-3.5 h-3.5 text-content-muted" />
-          </button>
-
-          {/* Status Filter */}
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-content-secondary bg-surface-card border border-border-main rounded-xl hover:border-border-light hover:text-content-main transition-colors"
-          >
-            <span>Status: All</span>
-            <ChevronDown className="w-3.5 h-3.5 text-content-muted" />
-          </button>
-
+        {!(searchTerm && searchTerm != "") ? <div className="flex flex-wrap items-center gap-2.5">
           {/* Sort Filter */}
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-content-secondary bg-surface-card border border-border-main rounded-xl hover:border-border-light hover:text-content-main transition-colors"
-          >
-            <span>Sort by: Stars</span>
-            <ChevronDown className="w-3.5 h-3.5 text-content-muted" />
-          </button>
-        </div>
+          <span className="text-xs font-medium text-content-secondary">Sort By</span>
+          <select onChange={(e)=> setSortValue(e.target.value)}
+           id="fruits" className="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-content-secondary bg-surface-card border border-border-main rounded-xl hover:border-border-light hover:text-content-main transition-colors">
+           
+            <option value="sort=full_name&direction=asc">Alphabetical Order</option>
+            <option value="sort=created&direction=desc">Created: New to Old</option>
+            <option value="sort=created&direction=asc">Created: Old to New</option>
+            <option value="sort=updated&direction=desc">Updated: New to Old</option>
+            <option value="sort=updated&direction=asc">Updated: Old to New</option>
+          </select>
+        </div> : null}
       </div>
 
       {/* Repositories Table Card */}
@@ -109,7 +92,10 @@ export const RepositoriesTable = () => {
                   className="hover:bg-surface-hover/60 transition-colors group"
                 >
                   {/* Repository Name */}
-                  <td className="py-3.5 px-5 cursor-pointer" onClick={()=> setselectedRepo(row.name)}>
+                  <td
+                    className="py-3.5 px-5 cursor-pointer"
+                    onClick={() => setselectedRepo(row.name)}
+                  >
                     <div className="flex items-center gap-2.5">
                       <FileCode className="w-4 h-4 text-content-muted group-hover:text-brand-blue transition-colors" />
                       <span className="font-semibold text-content-main group-hover:text-brand-blue transition-colors">
@@ -156,10 +142,34 @@ export const RepositoriesTable = () => {
             </tbody>
           </table>
         </div>
+        {!(searchTerm && searchTerm != "") ? <div className="flex items-center gap-2 text-md justify-center p-3">
+          {/* Prev Button */}
+          {pageNum != 1 ? (
+            <button
+              type="button"
+              className="px-3 py-1.5 rounded-lg border border-border-main text-content-secondary bg-surface-card hover:text-content-main hover:bg-surface-hover hover:border-border-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed font-medium cursor-pointer shadow-xs"
+              onClick={() => setPageNum((prev) => prev - 1)}
+            >
+              Prev
+            </button>
+          ) : null}
 
-        {/* Table Pagination Footer */}
-       
-        </div>
+          {/* Active Page Indicator */}
+          <span className="min-w-[28px] h-7 px-2 flex items-center justify-center rounded-lg bg-brand-blue text-white font-semibold text-xs shadow-xs">
+            {pageNum}
+          </span>
+
+          {/* Next Button */}
+          <button
+            type="button"
+            className="px-3 py-1.5 rounded-lg border border-border-main text-content-secondary bg-surface-card hover:text-content-main hover:bg-surface-hover hover:border-border-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed font-medium cursor-pointer shadow-xs"
+            onClick={() => setPageNum((prev) => prev + 1)}
+          >
+            Next
+          </button>
+        </div> : null}
+
+      </div>
     </section>
   );
 };

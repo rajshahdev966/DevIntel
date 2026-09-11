@@ -7,6 +7,12 @@ const profileSlice = createSlice({
     user: null,
     isLoading: false,
   },
+  reducers : {
+    removeUser: (state)=> {
+      state.user = null,
+      state.isLoading = false
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(profileAddAction.pending, (state) => {
@@ -25,3 +31,4 @@ const profileSlice = createSlice({
 
 
 export default profileSlice.reducer;
+export const { removeUser } = profileSlice.actions

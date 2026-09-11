@@ -1,37 +1,60 @@
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getGithubRepos } from "../api/repoApi";
+import { getDisplayGithubRepos, getGithubRepos } from "../api/repoApi";
 import { AnalysisContext } from "../../../app/context/AnalysisContext";
 import { useNavigate } from "react-router";
 
 export const useRepoTable = () => {
-    const navigate = useNavigate();
-  const {repos} = useContext(AnalysisContext)
-  const formatDate = (dateStirng) => {
-    if (!dateStirng) return "-";
-    const date = new Date(dateStirng);
-    const diffInSeconds = Math.floor((new Date() - date) / 1000);
-    let rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
-    if (diffInSeconds < 60) return rtf.format(-diffInSeconds, "second");
-    if (diffInSeconds < 3600)
-      return rtf.format(-Math.floor(diffInSeconds / 60), "minute");
-    if (diffInSeconds < 86400)
-      return rtf.format(-Math.floor(diffInSeconds / 3600), "hour");
-    return rtf.format(-Math.floor(diffInSeconds / 86400), "day");
-  };
+  // Basic Declarations 
+  const navigate = useNavigate();
+  const {formatDate} = useContext(AnalysisContext)
+  const { user } = useSelector((store) => store.profile);
+
+  //Config for the page 
+  const [pageNum, setPageNum] = useState(1);
+  const [searchTerm, setSearchTerm] = useState(null);
+  const [sortValue, setSortValue] = useState(null)
+  const [repos, setRepos] = useState([]);
+
+  const fetchRepos = async () => {
+    try {
+      const res = await getDisplayGithubRepos(user?.login, pageNum, sortValue, searchTerm);
+      setRepos(res);
+    } catch (error) {
+      console.log("Error in fetching the API for the rpeos", error);
+    }
+  }; // to fetch the response
+  useEffect(() => {
+    if (!user?.login) return;
+    const timeout = setTimeout(() => {
+      fetchRepos();
+    }, 500);
+    return  ()=>{
+      clearInterval(timeout)
+    }
+  }, [user?.login, pageNum, searchTerm, sortValue]);
+
 
   const copyGithubLink = async (link) => {
     try {
       await navigator.clipboard.writeText(link);
     } catch (error) {
-      console.log("Failed to copy", error);
+      console.log("Failed to copy");
     }
-  };
+    error;
+  }; // Copy the given link
 
   return {
     repos,
     formatDate,
     copyGithubLink,
-    navigate
+    navigate,
+    fetchRepos,
+    pageNum,
+    setPageNum,
+    searchTerm,
+    setSearchTerm,
+    sortValue,
+    setSortValue
   };
 };

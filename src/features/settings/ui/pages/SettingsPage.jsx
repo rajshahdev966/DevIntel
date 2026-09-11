@@ -1,14 +1,20 @@
-import React from 'react'
+import React from "react";
 import {
   Check,
   Moon,
   Sun,
   Laptop,
   RotateCw,
-  AlertTriangle
-} from 'lucide-react'
+  AlertTriangle,
+} from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { removeUser } from "../../../repoAdd/state/profileSlice";
 
 export const SettingsPage = () => {
+  const { user } = useSelector((store) => store.profile);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div className="flex-1 flex flex-col min-w-0">
       <main className="flex-1 p-6 md:p-8 space-y-6 max-w-5xl w-full mx-auto">
@@ -19,24 +25,9 @@ export const SettingsPage = () => {
               Settings
             </h1>
             <p className="text-sm text-content-secondary mt-1">
-              Manage workspace theme preferences and your linked GitHub account identity.
+              Manage workspace theme preferences and your linked GitHub account
+              identity.
             </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-content-main bg-surface-card-subtle border border-border-main hover:bg-surface-hover hover:border-border-light transition-colors"
-            >
-              Discard
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-brand-blue hover:bg-brand-blue-hover shadow-sm shadow-blue-500/20 active:scale-[0.98] transition-all"
-            >
-              <Check className="w-3.5 h-3.5 stroke-[3]" />
-              <span>Save Changes</span>
-            </button>
           </div>
         </div>
 
@@ -55,104 +46,69 @@ export const SettingsPage = () => {
             <span className="text-[11px] font-semibold text-content-muted tracking-wider uppercase block mb-3">
               Interface Theme
             </span>
-
-            {/* 3 Theme Options */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-              {/* Option 1: System Default */}
-              <div className="bg-surface-card-inner border border-border-main rounded-xl p-4 flex flex-col justify-between h-28 hover:border-border-light cursor-pointer transition-colors group">
-                <div className="flex items-center justify-between">
-                  <Laptop className="w-5 h-5 text-content-muted group-hover:text-content-main transition-colors" />
-                  <div className="w-4 h-4 rounded-full border border-border-light bg-transparent" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-content-main">
-                    System default
-                  </p>
-                  <p className="text-[11px] text-content-muted mt-0.5">
-                    Sync with OS theme
-                  </p>
-                </div>
-              </div>
-
-              {/* Option 2: Dark (Active in Screenshot) */}
-              <div className="bg-surface-card-inner border-2 border-blue-500/60 rounded-xl p-4 flex flex-col justify-between h-28 cursor-pointer shadow-sm relative">
-                <div className="flex items-center justify-between">
-                  <Moon className="w-5 h-5 text-blue-400" />
-                  <div className="w-4 h-4 rounded-full border-2 border-blue-500 bg-blue-500/20 flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-content-main">
-                    Dark
-                  </p>
-                  <p className="text-[11px] text-content-muted mt-0.5">
-                    High-contrast dark mode
-                  </p>
-                </div>
-              </div>
-
-              {/* Option 3: Light */}
-              <div className="bg-surface-card-inner border border-border-main rounded-xl p-4 flex flex-col justify-between h-28 hover:border-border-light cursor-pointer transition-colors group">
-                <div className="flex items-center justify-between">
-                  <Sun className="w-5 h-5 text-content-muted group-hover:text-amber-400 transition-colors" />
-                  <div className="w-4 h-4 rounded-full border border-border-light bg-transparent" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-content-main">
-                    Light
-                  </p>
-                  <p className="text-[11px] text-content-muted mt-0.5">
-                    Clean, daytime contrast
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Additional Display Toggles */}
-          <div className="space-y-4 pt-4 border-t border-border-main">
-            {/* Toggle 1: High Contrast Elements */}
-            <div className="flex items-center justify-between gap-4">
+          <div className="grid grid-cols-2 gap-3.5 items-center justify-center w-full">
+            {/* Dark Mode Option Card */}
+            <label
+              htmlFor="theme-toggle"
+              title="Switch to Dark Mode"
+              className="bg-surface-card-inner rounded-xl p-4 flex flex-col justify-between h-28 cursor-pointer transition-all border
+      border-blue-500/80 ring-1 ring-blue-500/50 shadow-sm
+      [:root:has(#theme-toggle:checked)_&]:border-border-main
+      [:root:has(#theme-toggle:checked)_&]:ring-0
+      [:root:has(#theme-toggle:checked)_&]:hover:border-border-light"
+            >
+              <div className="flex items-center justify-between">
+                <Moon className="w-5 h-5 text-blue-400 transition-colors [:root:has(#theme-toggle:checked)_&]:text-content-muted" />
+                {/* Radio Indicator */}
+                <div
+                  className="w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all
+        border-blue-500 bg-blue-500/20
+        [:root:has(#theme-toggle:checked)_&]:border-border-light
+        [:root:has(#theme-toggle:checked)_&]:bg-transparent"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-500 transition-opacity [:root:has(#theme-toggle:checked)_&]:opacity-0" />
+                </div>
+              </div>
               <div>
-                <p className="text-xs font-semibold text-content-main">
-                  High Contrast Elements
-                </p>
-                <p className="text-[11px] text-content-secondary mt-0.5">
-                  Enhance borders and text clarity across telemetry views.
+                <p className="text-xs font-semibold text-content-main">Dark</p>
+                <p className="text-[11px] text-content-muted mt-0.5">
+                  High-contrast dark mode
                 </p>
               </div>
+            </label>
 
-              {/* Switch Active */}
-              <button
-                type="button"
-                className="w-10 h-5 bg-blue-600 rounded-full p-0.5 flex items-center justify-end shadow-inner cursor-pointer"
-                aria-label="Toggle High Contrast Elements"
-              >
-                <div className="w-4 h-4 rounded-full bg-white shadow-sm" />
-              </button>
-            </div>
-
-            {/* Toggle 2: Dense Code & Table View */}
-            <div className="flex items-center justify-between gap-4 pt-3 border-t border-border-main/50">
+            {/* Light Mode Option Card */}
+            <label
+              htmlFor="theme-toggle"
+              title="Switch to Light Mode"
+              className="bg-surface-card-inner rounded-xl p-4 flex flex-col justify-between h-28 cursor-pointer transition-all border
+      border-border-main hover:border-border-light
+      [:root:has(#theme-toggle:checked)_&]:border-blue-500/80
+      [:root:has(#theme-toggle:checked)_&]:ring-1
+      [:root:has(#theme-toggle:checked)_&]:ring-blue-500/50
+      [:root:has(#theme-toggle:checked)_&]:shadow-sm"
+            >
+              <div className="flex items-center justify-between">
+                <Sun className="w-5 h-5 text-content-muted transition-colors [:root:has(#theme-toggle:checked)_&]:text-amber-400" />
+                {/* Radio Indicator */}
+                <div
+                  className="w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all
+        border-border-light bg-transparent
+        [:root:has(#theme-toggle:checked)_&]:border-blue-500
+        [:root:has(#theme-toggle:checked)_&]:bg-blue-500/20"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-500 opacity-0 transition-opacity [:root:has(#theme-toggle:checked)_&]:opacity-100" />
+                </div>
+              </div>
               <div>
-                <p className="text-xs font-semibold text-content-main">
-                  Dense Code &amp; Table View
-                </p>
-                <p className="text-[11px] text-content-secondary mt-0.5">
-                  Reduces padding for logs, diffs, and metric lists.
+                <p className="text-xs font-semibold text-content-main">Light</p>
+                <p className="text-[11px] text-content-muted mt-0.5">
+                  Clean, daytime contrast
                 </p>
               </div>
-
-              {/* Switch Inactive */}
-              <button
-                type="button"
-                className="w-10 h-5 bg-slate-700/60 border border-border-main rounded-full p-0.5 flex items-center justify-start cursor-pointer"
-                aria-label="Toggle Dense Code & Table View"
-              >
-                <div className="w-4 h-4 rounded-full bg-slate-400 shadow-sm" />
-              </button>
-            </div>
+            </label>
           </div>
         </section>
 
@@ -173,8 +129,8 @@ export const SettingsPage = () => {
               {/* Avatar with Status Dot */}
               <div className="relative shrink-0">
                 <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80"
-                  alt="Siddharth Sharma"
+                  src={user?.avatar_url}
+                  alt={user?.name}
                   className="w-11 h-11 rounded-xl object-cover ring-1 ring-border-light"
                 />
                 <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-blue-500 ring-2 ring-surface-card-inner" />
@@ -184,31 +140,14 @@ export const SettingsPage = () => {
               <div className="space-y-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="text-xs font-bold text-content-main">
-                    Siddharth Sharma
+                    {user?.name}
                   </span>
                   <span className="text-xs text-content-muted">
-                    @siddharth-dev
+                    @{user?.login}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-blue-400 bg-blue-500/10 border border-blue-500/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                    <span>Connected &amp; Verified</span>
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-1.5 text-xs text-content-muted">
-                  <RotateCw className="w-3.5 h-3.5 text-content-muted" />
-                  <span>Active sync: acme-systems-core</span>
                 </div>
               </div>
             </div>
-
-            {/* Re-authenticate Action */}
-            <button
-              type="button"
-              className="self-start sm:self-auto px-4 py-2 text-xs font-semibold text-content-main bg-surface-card-subtle border border-border-main rounded-xl hover:bg-surface-hover hover:border-border-light transition-colors"
-            >
-              Re-authenticate
-            </button>
           </div>
 
           {/* Disconnect Option */}
@@ -218,11 +157,16 @@ export const SettingsPage = () => {
                 Disconnect Account
               </p>
               <p className="text-[11px] text-content-secondary mt-0.5 max-w-lg">
-                Disconnecting will pause telemetry ingestion and sign out this GitHub profile from DevIntel.
+                Disconnecting will pause telemetry ingestion and sign out this
+                GitHub profile from DevIntel.
               </p>
             </div>
 
             <button
+              onClick={() => {
+                dispatch(removeUser())
+                return navigate("/")
+              }}
               type="button"
               className="self-start sm:self-auto px-4 py-2 text-xs font-semibold text-white bg-red-700 hover:bg-red-800 rounded-xl shadow-sm transition-colors active:scale-[0.98]"
             >
@@ -232,7 +176,7 @@ export const SettingsPage = () => {
         </section>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default SettingsPage
+export default SettingsPage;
