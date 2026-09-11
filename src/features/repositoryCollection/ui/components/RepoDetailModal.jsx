@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   BookMarked,
-  GitBranch,
   Copy,
   Check,
   X,
@@ -11,31 +10,26 @@ import {
   Eye,
   ArrowRight,
 } from "lucide-react";
-import { githubApi } from "../../../../config/githubAxios";
-import { useSelector } from "react-redux";
-import {
-  getCommitActivity,
-  getContriDetails,
-  getLangDetails,
-  getRepoDetails,
-} from "../../api/repoApi";
 import HeatMap from "./HeatMap";
 import LanguageBars from "./LanguageBars";
 import ContributiorsList from "./ContributiorsList";
 import { RiGithubFill } from "@remixicon/react";
+import useRepoDetailModal from "../../hooks/useRepoDetailModal";
+import RepoDetailSkeleton from "./skeletons/RepoDetailSkeleton";
 
 export const RepoDetailModal = ({ isOpen = true, onClose, selectedRepo }) => {
   const {
     copied,
-    setCopied,
     repoDetails,
     repoLang,
     contriData,
     commitData,
     handleCopyClone,
-  } = useDetailModal();
+  } = useRepoDetailModal(selectedRepo);
 
   if (!isOpen) return null;
+
+  if(!repoDetails) return <RepoDetailSkeleton/>
 
   return (
     <div className="w-full bg-[#0a0e17] border border-[#1b253b] rounded-2xl p-5 md:p-7 text-slate-100 shadow-2xl space-y-6 font-sans antialiased transition-all">

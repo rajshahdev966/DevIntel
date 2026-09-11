@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useSelector } from "react-redux";
 import { githubApi } from "../../../config/githubAxios";
 
 export const getGithubRepos = async (username) => {
@@ -8,7 +6,7 @@ export const getGithubRepos = async (username) => {
     const res = await githubApi.get(`/users/${username}/repos`);
     return res.data;
   } catch (error) {
-    console.log("Error in fetching repositories");
+    console.log("Error in fetching repositories", error);
   }
 }; // Get all the 100 Repos for analysis data
 export const getDisplayGithubRepos = async (
@@ -18,9 +16,6 @@ export const getDisplayGithubRepos = async (
   searchTerm,
 ) => {
   try {
-    console.log("Repo API here", username);
-    console.log("Search here ------>", searchTerm);
-
     if (!username) return [];
     if (searchTerm && searchTerm != "") {
       const res = await githubApi.get(
@@ -33,7 +28,7 @@ export const getDisplayGithubRepos = async (
     );
     return res.data;
   } catch (error) {
-    console.log("Error in fetching repositories");
+    console.log("Error in fetching repositories", error);
   }
 }; // To fetch and change the repos to display according to the need of user
 

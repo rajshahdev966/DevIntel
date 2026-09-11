@@ -7,9 +7,8 @@ import {
   RotateCw,
   AlertTriangle,
 } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import { removeUser } from "../../../repoAdd/state/profileSlice";
+import { useSettings } from "../../hooks/useSettings";
 
 export const SettingsPage = () => {
  

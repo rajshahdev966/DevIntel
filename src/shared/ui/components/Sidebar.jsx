@@ -12,8 +12,10 @@ import {
   Bell
 } from 'lucide-react'
 import { NavLink } from 'react-router'
+import { useSelector } from 'react-redux'
 
 export const Sidebar = () => {
+  const {user} = useSelector((store)=> store.profile)
   return (
     <aside className="w-64 shrink-0 h-screen bg-surface-sidebar border-r border-border-main flex flex-col justify-between p-4 transition-colors duration-200">
       {/* Top Section */}
@@ -73,16 +75,16 @@ export const Sidebar = () => {
           className="rounded-full ring-2 ring-border-light hover:ring-brand-blue transition-all flex gap-3 items-center p-1 pr-2 w-full"
         >
           <img
-            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80"
+            src={user?.avatar_url}
             alt="Siddharth Sharma Profile"
             className="w-10 h-10 rounded-full object-cover"
           />
-          <span className='text-wrap'>Siddharth</span>
+          <span className='text-wrap'>{user?.name}</span>
         </button>
         <label
           htmlFor="theme-toggle"
           title="Toggle Light / Dark Mode"
-          className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-surface-card border border-border-main text-content-secondary hover:text-content-main hover:border-border-light cursor-pointer transition-colors"
+          className="relative flex items-center justify-center w-10 h-12 rounded-xl bg-surface-card border border-border-main text-content-secondary hover:text-content-main hover:border-border-light cursor-pointer transition-colors"
         >
           {/* Moon icon visible in light mode */}
           <Moon className="w-4 h-4 hidden in-data-[theme=light]:block [:root:has(#theme-toggle:checked)_&]:block" />

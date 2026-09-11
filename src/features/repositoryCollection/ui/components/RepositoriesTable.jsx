@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Search, ChevronDown, FileCode } from "lucide-react";
-import { getGithubRepos } from "../../api/repoApi";
-import { useSelector } from "react-redux";
 import { useRepoTable } from "../../hooks/useRepoTable";
 import RepoDetailModal from "./RepoDetailModal";
+import RepositoriesTableSkeleton from "./skeletons/RepositoriesTableSkeleton";
 
 export const RepositoriesTable = () => {
   
   const { repos, formatDate, copyGithubLink, pageNum, setPageNum, setSearchTerm, searchTerm, setSortValue } = useRepoTable();
   const [selectedRepo, setselectedRepo] = useState(null);
+
+  if(repos.length == 0) return <RepositoriesTableSkeleton/>
 
   return (
     <section className="space-y-4">

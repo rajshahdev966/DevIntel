@@ -1,3 +1,12 @@
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import {
+  getRepoDetails,
+  getLangDetails,
+  getContriDetails,
+  getCommitActivity,
+} from "../api/repoApi";
+
 const useRepoDetailModal = (selectedRepo) => {
   const [copied, setCopied] = useState(false);
   const [repoDetails, setRepoDetails] = useState(null);

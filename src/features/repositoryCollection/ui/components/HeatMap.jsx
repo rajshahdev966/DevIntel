@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useHeatMap from "../../hooks/useHeatMap";
 
 const HeatMap = ({ commitContent }) => {
-  if (!commitContent) return null;
+  if(!commitContent) return;
   const { colors, getLevel } = useHeatMap(commitContent);
+  if (!commitContent) return null;
   return (
     <div className="flex gap-1 justify-center">
       {commitContent.map((weekObj, weekIdx) => (

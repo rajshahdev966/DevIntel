@@ -1,7 +1,8 @@
 import React from "react";
+import useLanguageBars from "../../hooks/useLanguageBars";
 
 const LanguageBars = ({ repoLang }) => {
-  const { countPercent, getLanguageColor } = useLanguageBars;
+  const { countPercent, getLanguageColor } = useLanguageBars(repoLang);
   return (
     <div>
       <div className="h-2 w-full rounded-full overflow-hidden flex bg-[#162134]">

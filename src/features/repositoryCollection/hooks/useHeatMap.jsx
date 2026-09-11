@@ -1,6 +1,6 @@
 
 const useHeatMap = (commitContent)=>{
-     const highest = Math.max(...commitContent.map((elem) => elem.total), 1);
+     const highest = Math.max(...commitContent?.map((elem) => elem.total), 1);
   
 
   const getLevel = (count) => {

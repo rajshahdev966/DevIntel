@@ -1,10 +1,10 @@
-import React, { startTransition, useContext, useEffect, useState } from "react";
+import React from "react";
 import { Code2, Star, GitFork, Users, Clock } from "lucide-react";
 
 import useMetrics from "../../hooks/useMetrics";
 
 export const MetricsOverview = () => {
-  const { allRepos, user, forkCountNum, starCountNum, formatDate } =
+  const { user, forkCountNum, starCountNum, formatDate } =
     useMetrics();
 
   return (
