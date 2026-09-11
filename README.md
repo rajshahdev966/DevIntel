@@ -19,6 +19,11 @@ Commit heatmaps, language footprints, contributor velocity — in one dashboard 
 [![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-state-764ABC?logo=redux&logoColor=white)](https://redux-toolkit.js.org)
 [![License](https://img.shields.io/badge/License-MIT-informational)](#license)
 
+<div align="center">
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-visit_site-success?style=for-the-badge&logo=vercel&logoColor=white)](https://dev-intel-eight.vercel.app/)
+
+</div>
 </div>
 
 ---
