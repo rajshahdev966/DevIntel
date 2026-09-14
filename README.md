@@ -79,8 +79,7 @@ flowchart LR
     E --> H[RepoDetailModal]
 ```
 
-<details>
-<summary><strong>Folder structure</strong></summary>
+<strong>Folder structure</strong>
 
 ```
 src/
@@ -95,8 +94,6 @@ src/
 ├── shared/
 └── index.css        # Tailwind v4 design tokens
 ```
-
-</details>
 
 ## The hard parts (and what I learned solving them)
 
